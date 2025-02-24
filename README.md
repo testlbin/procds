@@ -1,5 +1,5 @@
-# Anonymous Submission for MICCAI 2025 Paper ID: 2399
-
+# Anonymous Submission
+Anonymous Submission for MICCAI 2025 Paper ID: 2399
 This repository contains the anonymized materials for our submission to MICCAI 2025 (Paper ID: 2399). Below is an overview of the contents and structure of this repository. 
 
 '''
