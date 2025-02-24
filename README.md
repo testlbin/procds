@@ -26,8 +26,7 @@ This repository contains the anonymized materials for our submission to MICCAI 2
 ## 1. Overview
 - **Framework**: The overall framework is illustrated as follows:
   
-![The overall framework](figure/overview.png)
-
+<img src="figure/overview.png" alt="The overall framework" width="800">
 
 ## 2. Prompts
 ### Stage 1 Prompt:
