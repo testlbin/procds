@@ -1,171 +1,98 @@
-# Anonymous Submission
-Anonymous Submission for MICCAI 2025 Paper ID: 2399
-
-This repository contains the anonymized materials for our submission to MICCAI 2025 (Paper ID: 2399). Below is an overview of the contents and structure of this repository. 
+# ProCDS
+This is repo of MICCAI 2025 paper 'Prolog-Driven Rule-Based Diagnostics with Large Language Models for Precise Clinical Decision Support'
 
 ```
 ├── data/ # Example of Anonymized Dataset
 ├── figures/ # Figures
-├── prompts/ # Prompts used in Stage 1 and Stage 2
-└── README.md # This file
+├── Prompts.py # Prompts used in Stage 1 and Stage 2
+├── Stage1_extracItnfo.py # Workflow of Stage 1
+├── Stage2_prologGenerate.py # Workflow of Stage 2
+├── Stage2_verifyCode.py # Workflow of Stage 2
+├── prologInference.py # Inference Code of Prolog
+└── README.md 
 ```
 
-**The code will be made publicly available upon paper acceptance**
-
-# Contents
-
-1. [Overview](#1-overview)
-2. [Prompts](#2-prompts)
-   - [Stage 1 Prompt](#stage-1-prompt)
-     - [Extract Rules & Facts](#prompts-for-extract-rules--facts)
-     - [Verify Rules & Facts](#prompts-for-verify-rules--facts)
-   - [Stage 2 Prompt](#stage-2-prompt)
-     - [Translate to Prolog Code](#prompts-for-translate-to-prolog-code)
-     - [Verify Errors Code](#prompts-for-verify-errors-code)
-
-## 1. Overview
+## Overview
 - **Framework**: The overall framework is illustrated as follows:
   
 <img src="figure/overview.png" alt="The overall framework" width="800">
 
-## 2. Prompts
-### Stage 1 Prompt:
 
-#### Prompts for Extract Rules & Facts:
-  - ```
-    ## Prompt: Extract Rules & Facts
-    
-    ### Instructions:
-    Your task is to help me extract information. Below are the detailed instructions. Thanks for your help!
-    1. You should **strictly follow the following instructions**.
-    2. Extract rules related to patient information.
-    3. Determine if missing values can be computed from the existing information.
-    4. Please **only give me the rules and formulas** and DO NOT show your reasoning steps and calculation.
-  
-    ### Example:
-  
-    #### Example 1:
-    {}
-  
-    #### Example 2:
-    {}
-  
-    #### Example 3:
-    {}
-  
-    Below is you need to handle:
-  
-    High Risk Group: {}
-  
-    Patient info: {}
+## Features
 
-    ### Response:
-    ```
-  
-#### Prompts for Verify Rules & Facts:
-  - ```
-    ## Prompt: Verify Rules & Facts
-    
-    ### Instructions:
-    Your task is to help me ***verify and edit text***. Below are the detailed instructions. Thanks for your help!
-    1. You should **strictly follow the following instructions**.
-    2. You need to verify and correct errors in the input rules based on the provided rule set. You only need to output the corrected sentences with edits.
-    3. DO NOT show reasoning steps, explanations, or calculations.
-    
-    ### Example:
-    
-    #### Example 1:
-    {}
-    
-    #### Example 2:
-    {}
-    
-    #### Example 3:
-    {}
-    
-    Below you need to verify the numbers"
-    
-    {Rules} or {Facts}
+- **LLM-Powered Information Extraction**: Leverages LLMs to understand and extract key rules and patient facts from text.
+- **Automated Prolog Generation**: Translates extracted information into executable Prolog code.
+- **LLM-Based Code Verification**: Employs an LLM to review and refine the generated Prolog code, improving its reliability.
+- **Multi-Stage Pipeline**: A clear, step-by-step workflow from raw data to final inference.
 
-    Stay consistent with the example format.
-    ### Response:
-    ```
-    
-### Stage 2 Prompt:
 
-  
-#### Prompts for Translate to Prolog Code:
-  - ```
-    ## Prompt: Translate to Prolog Code
-    ### Instructions:
-    Your task is to help me write ** Prolog ** code. Below are the detailed instructions. Thanks for your help!
-    1. Your code should be accurate, self-consistent, and complete. Use consistent variable names for co-referent entities or attributes across all triples and rules.
-    2. Begin by coding the triples after the "/* Triples */" comment. Then, code the rules after the "/* Rules */" comment. Finally, code the question statements after the "/* Questions */" comment.
-    3. Please **only give me the Prolog code** and DO NOT show your reasoning steps in natural language.
-    4. Identify patients as high-risk if they meet 3 or more of the rules.
-    5. You should **strictly follow the following instructions**.
-    
-    ### Example:
-    
-    #### Example 1:
-    {}
-    #### Example 2:
-    {}
-    #### Example 3:
-    {}
-    
-    Below is you need to handle:
-    
-    Patient information:
-    {Related Facts}
-   
-    High-risk criteria that the Prolog code might use when processing this patient data:
-   
-    High Risk Group Rules:
-    {Related Rules}
-  
-    Stay consistent with the example format, no need for extra explanations, just output the Prolog code.
-   
-    ###Response:
-  
-    ```
-  
-#### Prompts for Verify Errors Code:
-  - ```
-    ## Prompt: Verify Errors Code
-    
-    ### Instructions:
-    Your task is to help me verify and edit ***Prolog*** Code. Below are the detailed instructions. Thanks for your help!
-    1. You should **strictly follow the following instructions**.
-    2. You need to verify and correct errors in the Prolog, You only need to output the Prolog Code. 
-    3. Begin by coding the triples after the "/* Triples */" comment. Then, code the rules after the "/* Rules */" comment. Finally, code the question statements after the "/* Questions */" comment.
-    4. DO NOT show reason steps, explain.
-    
-    ### Example:
-    
-    #### Example 1:
-    {}
-    #### Example 2:
-    {}
-    #### Example 3:
-    {}
-    
-    Below you need to verify:
-   
-    Facts:
-    {Facts}
-   
-    Rules:
-    {Rules}
-   
-    Prolog Code:
-    {Prolog Code}
-   
-    ###Response:
-    ```
-    
----
+## Dependencies
 
-This README file provides a comprehensive guide to the contents of this repository. All materials have been anonymized for double-blind review. For further details, please refer to the supplementary materials.
+- **Python Libraries**:
+  - [`vllm`](https://github.com/vllm-project/vllm): For high-throughput LLM inference. Requires a compatible GPU (e.g., NVIDIA) and CUDA toolkit.
+  - `jsonlines`: For handling JSONL files.
+  - [`pyswip`](https://pyswip.readthedocs.io/en/stable/get_started.html): Python-Prolog Interface
+  ```bash
+  pip install vllm jsonlines pyswip
+  ```
+
+- **External Software**:
+  - **SWI-Prolog**: The `prologInference.py` script requires a [SWI-Prolog](https://www.swi-prolog.org/Download.html) interpreter to be installed and available in the system's PATH.
+  
+## How to Run
+
+First, ensure all dependencies are installed. Then, run the scripts in sequence.
+
+```bash
+# --- Configuration ---
+# Path to the local LLM model compatible with vLLM
+MODEL_PATH="/path/to/your/Llama-3-8B-Chat" 
+# Path to the input data
+INPUT_DATA="data/patient.jsonl"
+
+# --- Output file paths ---
+EXTRACT_OUTPUT="data/data_extract.jsonl"
+PROLOG_OUTPUT="data/prolog.jsonl"
+PROLOG_VERIFIED_OUTPUT="data/prolog_verified.jsonl"
+FINAL_RESULTS="data/results.jsonl"
+
+# Stage 1: Extract Rules and Facts
+python submit/Stage1_extractInfo.py \
+    --model_path $MODEL_PATH \
+    --input_path $INPUT_DATA \
+    --output_path $EXTRACT_OUTPUT
+
+# Stage 2a: Generate Prolog Code
+python submit/Stage2_prologGenerate.py \
+    --model_path $MODEL_PATH \
+    --input $EXTRACT_OUTPUT \
+    --output $PROLOG_OUTPUT
+
+# Stage 2b: Run Prolog Inference
+python submit/prologInference.py \
+    --input $PROLOG_OUTPUT \
+    --output $PROLOG_RESULTS
+
+# Stage 2c: Verify Prolog Code
+python submit/Stage2_verifyCode.py \
+    --model_path $MODEL_PATH \
+    --input $PROLOG_OUTPUT \
+    --output $PROLOG_VERIFIED_OUTPUT
+
+# Stage 2d: Run Prolog Inference
+python submit/prologInference.py \
+    --input $PROLOG_VERIFIED_OUTPUT \
+    --output $FINAL_RESULTS
+```
 
 ---
+
+# Ackonwledgment
+We extend our sincere gratitude to the following open-source projects and communities for their invaluable contributions:
+
+- **[SWI-Prolog](https://www.swi-prolog.org/)** – The powerful Prolog engine that enabled efficient symbolic reasoning in our work.
+- **[PySwip](https://github.com/yuce/pyswip)** – The Python-SWI-Prolog bridge that made seamless integration possible.
+- **[vLLM](https://github.com/vllm-project/vllm)** – The high-performance LLM serving framework that accelerated our inference pipelines.
+
+We deeply appreciate the efforts of their developers and maintainers.
+
